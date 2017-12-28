@@ -1,0 +1,171 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="SunBoBo"><link rel="alternative" href="/atom.xml" title="SunBoBo" type="application/atom+xml"><link rel="icon" href="/favicon.png"><title>HTML基础 - SunBoBo</title><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css"><!--[if lt IE 9]><script>(function(a,b){a="abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video".split(" ");for(b=a.length-1;b>=0;b--)document.createElement(a[b])})()</script><![endif]--><script src="/js/jquery-3.1.1.min.js"></script><script src="/js/fancybox/jquery.fancybox.min.js"></script></head><body style="opacity:0;"><header class="head"><h1 class="head-title u-fl"><a href="/">SunBoBo</a></h1><nav class="head-nav u-fr"><ul class="head-nav__list"><li class="head-nav__item"><a class="head-nav__link" href="/archives">Catalog（目录）</a></li></ul></nav></header><main class="main"><article class="post"><header class="post__head"> <time class="post__time" datetime="2015-03-28T16:00:00.000Z">March 29, 2015</time><h1 class="post__title"><a href="/2015/03/29/HTML基础/">HTML基础</a></h1><div class="post__main echo"><h1 id="一、了解HTML"><a href="#一、了解HTML" class="headerlink" title="一、了解HTML"></a>一、了解HTML</h1><p>​    HTML不是一个单词，而是（Hyper Text Markup Language）首字母的缩写。意思是超文本标记语言。我们来逐字翻译一下</p>
+<ul>
+<li>超文本：简单在字面上的意思来看就是，要比普通文字还要牛掰的语言。就想普通人和朝人一                            样。</li>
+</ul>
+<ul>
+<li>标记：也被称为“标签”，超文本之所以比普通文本牛，就是因为有特殊的标记。就像超人身上的S字母一样</li>
+</ul>
+<ul>
+<li>语言：沟通方式，和浏览器沟通的语言。</li>
+</ul>
+<p>​    所以总结一下 HTML 就是通过一些带有特殊标记的语言告诉网页（浏览器）中应当显示什么，主要作用就是用来描述网页的结构和内容。相当于描述一个人 的身体结构，五脏六腑。</p>
+<h4 id="什么是DTD"><a href="#什么是DTD" class="headerlink" title="什么是DTD"></a>什么是DTD</h4><p>​    在HTML基本结构中的第一句代码是以&lt;!DOCTYPE…&gt;开头的标签，这个标签被称为DTD</p>
+<p>​    DTD（Document Type Declaration）意思是文档类型声明</p>
+<p>​    作用就是告诉浏览器在解读网页中结构和内容时，按照哪一个HTML版本标准来解读。</p>
+<h2 id="二、主流HTML的版本"><a href="#二、主流HTML的版本" class="headerlink" title="二、主流HTML的版本"></a>二、主流HTML的版本</h2><ul>
+<li><p><strong>HTML4.01：</strong></p>
+<p>HTML4.01的DTD有三种模式，分别是</p>
+<ol>
+<li><p>strict：严格模式</p>
+<p>严格模式中不推荐使用一些仅仅只是表现样式的而没有语义的标签如 b 标签、i 标签、s 标签、u 标签等，这些标签在严格模式中视为不规范</p>
+</li>
+<li><p>Transitional：过渡模式</p>
+<p>过渡模式中，使用一些仅仅表现样式而没有语义的标签，也会被视为规范</p>
+</li>
+<li><p>Frameset：框架模式</p>
+<p>在页面中若使用frameset标签，推荐使用该模式</p>
+</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li><p>XHTML1.0的DTD有三种模式，分别是</p>
+<ol>
+<li><p>strict：严格模式</p>
+<p>严格模式中不推荐使用一些仅仅只是表现样式的而没有语义的标签如 b 标签、i 标签、s 标签、u 标签等，这些标签在严格模式中视为不规范</p>
+</li>
+<li><p>Transitional：过渡模式</p>
+<p>过渡模式中，使用一些仅仅表现样式而没有语义的标签，也会被视为规范</p>
+</li>
+<li><p>Frameset：框架模式</p>
+<p>在页面中若使用frameset标签，推荐使用该模式</p>
+</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li><p>HTML5.0 </p>
+<ol>
+<li><p>HTML5.0是最新版本，与之前版本不同的是，增加了很多新的特性：</p>
+<p>以往用flash插件来实现媒体功能，比如：视频、音频、画布等</p>
+</li>
+</ol>
+</li>
+<li><p>XHTML1.0 和 HTML4.01的区别</p>
+<ol>
+<li><p>XHTML1.0比HTML4.01在语法上规范要求更加严格</p>
+<p>如：双标签要承兑、html以及其中的标签要小写</p>
+<p>区别是理论上的区别，表现上无法区别</p>
+</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h2 id="三、常用标签"><a href="#三、常用标签" class="headerlink" title="三、常用标签"></a>三、常用标签</h2><h4 id="1、meta标签"><a href="#1、meta标签" class="headerlink" title="1、meta标签"></a>1、meta标签</h4><ul>
+<li><strong>写法 :</strong> <meta charset="utf-8"></li>
+</ul>
+<ul>
+<li><strong>作用 :</strong> 用作网页配置</li>
+</ul>
+<ul>
+<li><p><strong>属性 :</strong> charset 是meta标签的一个属性，utf-8是字符集（chatset）所对应的结果（值）</p>
+<ul>
+<li><p><strong>常用的字符集 :</strong></p>
+<p>utf-8 : 国际通用字符集</p>
+<p>gb2312 : 简体中文字符集和英文、数字、和少量的特殊符号</p>
+<p>gbk : 简体中文字符集和繁体中文字符、英文、数字和少量的特殊符号</p>
+<ul>
+<li><p><strong>区别 :</strong> </p>
+<p>大小：utf-8&gt;gbk&gt;gb2312</p>
+<p>性能：gb2312&gt;gbk&gt;utf-8</p>
+<p>这个meta标签的差染色体属性，意思就是告诉浏览器在读取HTML文件的时候，用指定的字库（字符集）来解析当前文件的内容</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2、其他标签"><a href="#2、其他标签" class="headerlink" title="2、其他标签"></a>2、其他标签</h4><ul>
+<li>加粗：b标签 <b>文字</b> </li>
+</ul>
+<p>​           strong标签<strong>文字</strong></p>
+<p>​           区别是b标签没有语义，strong标签除了将字体加粗之外还表示重要的意思，有语义。</p>
+<ul>
+<li>斜体：i标签<i>文字</i></li>
+</ul>
+<p>​           em标签<em>文字</em></p>
+<p>​           区别是i标签没有语义，em标签除了将字体变成斜体之外还表示强调的意思，有语义。</p>
+<ul>
+<li>删除：s标签<s>文字</s></li>
+</ul>
+<p>​           del标签<del>文字</del></p>
+<p>​           区别是s标签没有语义，del标签除了在字体中间加个删除线之外还表示删除的意思，有语义。</p>
+<ul>
+<li>下划线：u标签<u>文字</u></li>
+</ul>
+<p>​               ins标签<ins>文字</ins></p>
+<p>​               区别是u标签没有语义，ins标签除了在字体下边加个下划线之外还表示下划线的意思，有语义。</p>
+<p>​    </p>
+<h4 id="3、图片-img标签"><a href="#3、图片-img标签" class="headerlink" title="3、图片 img标签"></a>3、图片 img标签</h4><ul>
+<li><strong>写法 :</strong> <img src=""></li>
+</ul>
+<ul>
+<li><strong>作用 :</strong> 在页面中插入一张图片。</li>
+</ul>
+<ul>
+<li><p><strong>属性 :</strong> src=”” 表示图片的路径，就是在哪里找到这张图片</p>
+<p>​           alt=””表示图片在加载异常的时候用文字代替图片表达的意思。</p>
+</li>
+</ul>
+<p>​          title=””表示图片的标题，表示当鼠标悬停在图片上的时候显示图片信息</p>
+<p>​          width=””表示图片的宽度。</p>
+<p>​          height=””表示图片的高度。</p>
+<p>​    图片的宽度高度，单独设置的时候，图片会根据，width  和 height 所给的值，进行等比例缩放。在实际开发中不会使用这种方式表示。会使用css样式来设置图片的宽高。</p>
+<ul>
+<li><h5 id="路径的问题"><a href="#路径的问题" class="headerlink" title="路径的问题 :"></a>路径的问题 :</h5><ul>
+<li><p><strong>相对路径:</strong></p>
+<ol>
+<li><strong>情况一</strong>：图片和HTML文件在同一个文件夹里的时候，可以直接输入图片的  图片名.图片格式即可   src=”sunbobo.jpg”</li>
+<li><strong>情况二：</strong>图片在HTML文件的上层文件夹的时候，HTML文件若想访问这张图片需要出去这层文件夹，才能找到图片。src = “../sunbobo.jpg” ../的意思就表示出去本层目录（文件夹）</li>
+<li><strong>情况三：</strong>图片在HTML文件的下层文件夹的时候，HTML文件若想访问这张图片需要进去图片所在层文件夹，才能找到图片。比如说图片在 images文件夹中的时候。HTML想要访问这张图片src = “images/sunbobo.jpg” 表示进去images文件夹访问这张图片</li>
+<li><strong>情况四：</strong>图片HTML问价在不同的文件夹中的时候，如 图片在images文件夹中，HTML文件，在HTML文件夹中。HTML文件若想访问这张图片需要出去HTML文件夹再进入images文件夹中，才能找到图片。src = “../images/sunbobo.jpg” ..表示先出去本层HTML文件夹，然后进入images文件夹访问图片。</li>
+</ol>
+<p>​      <em>这种访问路径的方式叫做相对路径。</em></p>
+</li>
+</ul>
+<p>​    路径有两种表示方式，一个是相对路径，一个是绝对路径。</p>
+<ul>
+<li><p><strong>绝对路径：</strong>不常用（简单了解）</p>
+<ol>
+<li><p>就是一堆带有盘符的路径访问方式叫做绝对路径。比如src=”C:\Users\bhjt\Desktop\images\sunbobo.jpg”</p>
+</li>
+<li><p>或是带有网址的路径也被称为绝对路径。比如 </p>
+<p>src=”www.baidu.com”</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="4、表格"><a href="#4、表格" class="headerlink" title="4、表格"></a>4、表格</h4><ul>
+<li><p>table：</p>
+<ol>
+<li><p>作用：表示表格。以往会用作网页布局，现在主要用作显示表格数据。</p>
+</li>
+<li><p>语法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">&lt;!--</div><div class="line">	table 表示整个表格，table下只能放 caption、thead、tbody、tfoot</div><div class="line">--&gt;</div><div class="line">&lt;table&gt;</div><div class="line">	&lt;!-- caption表格中标题，此标签里可以放其他标签。可有可无 --&gt;</div><div class="line">	&lt;caption&gt;表格中的标题&lt;/caption&gt;</div><div class="line">	&lt;!-- 表头，此标签里只能放tr。可有可无 --&gt;</div><div class="line">	&lt;thead&gt;</div><div class="line">		&lt;!-- tr表示一行，在thead中推荐放入th标签 --&gt;</div><div class="line">		&lt;tr&gt;</div><div class="line">			&lt;!-- 头部中单元格 --&gt;</div><div class="line">			&lt;th&gt;内容&lt;/th&gt;</div><div class="line">		&lt;/tr&gt;</div><div class="line">	&lt;/thead&gt;</div><div class="line">	</div><div class="line">	&lt;!-- 表体，此标签里只能放tr。必须有 --&gt;</div><div class="line">	&lt;tbody&gt;</div><div class="line">		&lt;!--tr表示一行，在tbody中只能放入td --&gt;</div><div class="line">		&lt;tr&gt;</div><div class="line">			&lt;!-- 主体中的单元格，可以放入任何标签和内容 --&gt;</div><div class="line">			&lt;td&gt;内容&lt;/td&gt;</div><div class="line">		&lt;/tr&gt;</div><div class="line">	&lt;/tbody&gt;</div><div class="line">	</div><div class="line">	&lt;!-- 表格底部，此标签里只能放入tr。可有可无 --&gt;</div><div class="line">	&lt;tfoot&gt;</div><div class="line">		&lt;!--tr表示一行，在tfoot中只能放入td --&gt;</div><div class="line">		&lt;tr&gt;</div><div class="line">			&lt;!-- 主体中的单元格，可以放入任何标签和内容 --&gt;</div><div class="line">			&lt;td&gt;内容&lt;/td&gt;</div><div class="line">		&lt;/tr&gt;</div><div class="line">	&lt;/tfoot&gt;</div><div class="line">&lt;/table&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>表格中的常用属性</p>
+<ul>
+<li>width：设置表格宽度</li>
+<li>height：设置表格高度</li>
+<li>cellspacing：设置表格单元格之间的距离</li>
+<li>cellpadding：设置表格内容与边框之间的距离</li>
+<li>border：给表格设置边框</li>
+<li>align：left/center/right 。设置内容的对齐方式 。左/居中/右 。（table / thead / tbody / tfoot / tr / th / td 都可以写）</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+</div></header></article><div class="comments" id="lv-container" data-id="city" data-uid="your uid"><script>(function(d, s) {var j, e = d.getElementsByTagName(s)[0];if (typeof LivereTower === 'function') { return; } j = d.createElement(s);j.src = 'https://cdn-city.livere.com/js/embed.dist.js';j.async = true;e.parentNode.insertBefore(j, e);})(document, 'script');</script></div></main><footer class="foot"><div class="foot-copy">&copy; 2016-2017 SunBoBo</div></footer><script src="/js/scroller.js"></script><script src="/js/main.js"></script></body></html>
