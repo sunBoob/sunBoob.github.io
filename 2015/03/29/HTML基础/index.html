@@ -119,9 +119,10 @@
 <li>alt=””表示图片在加载异常的时候用文字代替图片表达的意思。</li>
 <li>title=””表示图片的标题，表示当鼠标悬停在图片上的时候显示图片信息</li>
 <li>width=””表示图片的宽度。</li>
-<li>height=””表示图片的高度。</li>
+<li><p>height=””表示图片的高度。</p>
+<p>​图片的宽度高度，单独设置的时候，图片会根据，width  和 height 所给的值，进行等比例缩放。在实际开发中不会使用这种方式表示。会使用css样式来设置图片的宽高。</p>
+</li>
 </ul>
-<p>图片的宽度高度，单独设置的时候，图片会根据，width  和 height 所给的值，进行等比例缩放。在实际开发中不会使用这种方式表示。会使用css样式来设置图片的宽高。</p>
 </li>
 <li><p>​<strong>路径的问题：</strong>        </p>
 <ul>
@@ -147,7 +148,51 @@
 </ul>
 </li>
 </ul>
-<h4 id="4、表格"><a href="#4、表格" class="headerlink" title="4、表格"></a>4、表格</h4><ul>
+<h4 id="4、a-标签"><a href="#4、a-标签" class="headerlink" title="4、a 标签"></a>4、a 标签</h4><ul>
+<li><p>a 标签：</p>
+<ol>
+<li><p>作用：超链接，锚链接。实现页面跳转和页面内外的定位</p>
+</li>
+<li><p>语法：&lt; a &gt;内容&lt;/ a &gt;</p>
+</li>
+<li><p>a 标签的属性：</p>
+<ul>
+<li>href，引入将来要跳转到指定位置的路径 <ol>
+<li>绝对路径</li>
+<li>相对路径</li>
+</ol>
+</li>
+<li>target，打开的方式<ol>
+<li>_self    默认本窗口</li>
+<li>_blank    新窗口打开</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>base 标签：</p>
+<ul>
+<li>作用：可以统一控制页面上所有a标签的打开方式</li>
+<li>特点：写在head标签里</li>
+</ul>
+</li>
+<li><p>空链接：</p>
+<ul>
+<li><p>&lt; a href=”#”&gt;空链接&lt; /a &gt;</p>
+</li>
+<li><p>页面内部定位</p>
+<p>需要给指定要跳转到的位置添加id属性。id属性=”值”，如：id=”top”</p>
+<p>值：可以由数字、字母、下划线组成，但不能以数字开头。（规范）</p>
+<p><strong>注意</strong>id名有不可重复性。不能重复命名。（规范）</p>
+<p>然后再a标签的href属性中加入#id名 。&lt; a href=”#top”&gt;回到顶部&lt; /a &gt;</p>
+</li>
+<li><p>页面外部定位</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="5、表格"><a href="#5、表格" class="headerlink" title="5、表格"></a>5、表格</h4><ul>
 <li><p>table：</p>
 <ol>
 <li><p>作用：表示表格。以往会用作网页布局，现在主要用作显示表格数据。</p>
@@ -168,4 +213,4 @@
 </ol>
 </li>
 </ul>
-</div></header></article><div class="comments" id="lv-container" data-id="city" data-uid="your uid"><script>(function(d, s) {var j, e = d.getElementsByTagName(s)[0];if (typeof LivereTower === 'function') { return; } j = d.createElement(s);j.src = 'https://cdn-city.livere.com/js/embed.dist.js';j.async = true;e.parentNode.insertBefore(j, e);})(document, 'script');</script></div></main><footer class="foot"><div class="foot-copy">&copy; 2016-2017 SunBoBo</div></footer><script src="/js/scroller.js"></script><script src="/js/main.js"></script></body></html>
+</div></header></article><div class="comments" id="lv-container" data-id="city" data-uid="your uid"><script>(function(d, s) {var j, e = d.getElementsByTagName(s)[0];if (typeof LivereTower === 'function') { return; } j = d.createElement(s);j.src = 'https://cdn-city.livere.com/js/embed.dist.js';j.async = true;e.parentNode.insertBefore(j, e);})(document, 'script');</script></div></main><footer class="foot"><div class="foot-copy">&copy; 2016-2018 SunBoBo</div></footer><script src="/js/scroller.js"></script><script src="/js/main.js"></script></body></html>

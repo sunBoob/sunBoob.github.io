@@ -1,0 +1,534 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="SunBoBo"><link rel="alternative" href="/atom.xml" title="SunBoBo" type="application/atom+xml"><link rel="icon" href="/favicon.png"><title>关于小程序 - SunBoBo</title><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css"><!--[if lt IE 9]><script>(function(a,b){a="abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video".split(" ");for(b=a.length-1;b>=0;b--)document.createElement(a[b])})()</script><![endif]--><script src="/js/jquery-3.1.1.min.js"></script><script src="/js/fancybox/jquery.fancybox.min.js"></script></head><body style="opacity:0;"><header class="head"><h1 class="head-title u-fl"><a href="/">SunBoBo</a></h1><nav class="head-nav u-fr"><ul class="head-nav__list"><li class="head-nav__item"><a class="head-nav__link" href="/archives">Catalog（目录）</a></li></ul></nav></header><main class="main"><article class="post"><header class="post__head"> <time class="post__time" datetime="2018-07-16T16:00:00.000Z">July 17, 2018</time><h1 class="post__title"><a href="/2018/07/17/关于小程序/">关于小程序</a></h1><div class="post__main echo"><h1 id="小程序的框架思想"><a href="#小程序的框架思想" class="headerlink" title="小程序的框架思想"></a>小程序的框架思想</h1><p>   小程序的框架思想是基于MVVM框架思想，准确的说就是 MVVM框架思想。他集合了vue  和react 的优点，开发效率快，组件清晰，并且自成一体，开发模式改动很大。</p>
+<h3 id="小程序的标签"><a href="#小程序的标签" class="headerlink" title="小程序的标签"></a>小程序的标签</h3><p>  小程序自己封装了一些标签，且只有这些标签，不过呢，小程序的标签要比html的标签牛掰多了，小程序的标签中自带一些 非常强大的属性，这些属性都有很多很多牛掰的功能我们来看一下。</p>
+<h5 id="1、view标签"><a href="#1、view标签" class="headerlink" title="1、view标签"></a>1、view标签</h5><p>​    可以把它看做成div。视口的意思。块级元素，</p>
+<p>​    view是最常用的标签，就想html中，没啥用的来个div一样，你不知道用什么标签好的时候就来个view吧，哈哈，view中的属性不多。就四个，</p>
+<table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>类型</th>
+<th>默认值</th>
+<th>说明</th>
+<th style="text-align:center">最低版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>hover-class</td>
+<td>String</td>
+<td>none</td>
+<td>指定按下去的样式类。当 <code>hover-class=&quot;none&quot;</code> 时，没有点击态效果</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>hover-stop-propagation</td>
+<td>Boolean</td>
+<td>false</td>
+<td>指定是否阻止本节点的祖先节点出现点击态</td>
+<td style="text-align:center"><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">1.5.0</a></td>
+</tr>
+<tr>
+<td>hover-start-time</td>
+<td>Number</td>
+<td>50</td>
+<td>按住后多久出现点击态，单位毫秒</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>hover-stay-time</td>
+<td>Number</td>
+<td>400</td>
+<td>手指松开后点击态保留时间，单位毫秒</td>
+</tr>
+</tbody>
+</table>
+<p>反正我是没怎么用过，具体啥样也不知道</p>
+<hr>
+<h5 id="2、navigator"><a href="#2、navigator" class="headerlink" title="2、navigator"></a>2、navigator</h5><p>​    导航的意思。可以把它看成a标签，自带url属性，点击跳转链接。也是比较常用的一个标签通常我是把它当做li里嵌套一个a标签实现块点击的方式用的</p>
+<table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>类型</th>
+<th>默认值</th>
+<th>说明</th>
+<th>最低版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>target</td>
+<td>String</td>
+<td></td>
+<td>在哪个目标上发生跳转，默认当前小程序</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">2.0.7</a></td>
+</tr>
+<tr>
+<td>url</td>
+<td>String</td>
+<td></td>
+<td>当前小程序内的跳转链接</td>
+<td></td>
+</tr>
+<tr>
+<td>open-type</td>
+<td>String</td>
+<td>navigate</td>
+<td>跳转方式</td>
+<td></td>
+</tr>
+<tr>
+<td>delta</td>
+<td>Number</td>
+<td></td>
+<td>当 open-type 为 ‘navigateBack’ 时有效，表示回退的层数</td>
+<td></td>
+</tr>
+<tr>
+<td>app-id</td>
+<td>String</td>
+<td></td>
+<td>当target=”miniProgram”时有效，要打开的小程序 appId</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">2.0.7</a></td>
+</tr>
+<tr>
+<td>path</td>
+<td>String</td>
+<td></td>
+<td>当target=”miniProgram”时有效，打开的页面路径，如果为空则打开首页</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">2.0.7</a></td>
+</tr>
+<tr>
+<td>extra-data</td>
+<td>Object</td>
+<td></td>
+<td>当target=”miniProgram”时有效，需要传递给目标小程序的数据，目标小程序可在 <code>App.onLaunch()</code>，<code>App.onShow()</code> 中获取到这份数据。<a href="https://developers.weixin.qq.com/miniprogram/dev/framework/app-service/app.html" target="_blank" rel="external">详情</a></td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">2.0.7</a></td>
+</tr>
+<tr>
+<td>version</td>
+<td>version</td>
+<td>release</td>
+<td>当target=”miniProgram”时有效，要打开的小程序版本，有效值 develop（开发版），trial（体验版），release（正式版），仅在当前小程序为开发版或体验版时此参数有效；如果当前小程序是正式版，则打开的小程序必定是正式版。</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">2.0.7</a></td>
+</tr>
+<tr>
+<td>hover-class</td>
+<td>String</td>
+<td>navigator-hover</td>
+<td>指定点击时的样式类，当<code>hover-class=&quot;none&quot;</code>时，没有点击态效果</td>
+<td></td>
+</tr>
+<tr>
+<td>hover-stop-propagation</td>
+<td>Boolean</td>
+<td>false</td>
+<td>指定是否阻止本节点的祖先节点出现点击态</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">1.5.0</a></td>
+</tr>
+<tr>
+<td>hover-start-time</td>
+<td>Number</td>
+<td>50</td>
+<td>按住后多久出现点击态，单位毫秒</td>
+<td></td>
+</tr>
+<tr>
+<td>hover-stay-time</td>
+<td>Number</td>
+<td>600</td>
+<td>手指松开后点击态保留时间，单位毫秒</td>
+</tr>
+</tbody>
+</table>
+<p><strong>open-type 有效值：</strong></p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>说明</th>
+<th>最低版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>navigate</td>
+<td>对应 <code>wx.navigateTo</code> 或 <code>wx.navigateToMiniProgram</code> 的功能</td>
+<td></td>
+</tr>
+<tr>
+<td>redirect</td>
+<td>对应 <code>wx.redirectTo</code> 的功能</td>
+<td></td>
+</tr>
+<tr>
+<td>switchTab</td>
+<td>对应 <code>wx.switchTab</code> 的功能</td>
+<td></td>
+</tr>
+<tr>
+<td>reLaunch</td>
+<td>对应 <code>wx.reLaunch</code> 的功能</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">1.1.0</a></td>
+</tr>
+<tr>
+<td>navigateBack</td>
+<td>对应 <code>wx.navigateBack</code> 的功能</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">1.1.0</a></td>
+</tr>
+<tr>
+<td>exit</td>
+<td>退出小程序，target=”miniProgram”时生效</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">2.1.0</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>注：navigator-hover 默认为 {background-color: rgba(0, 0, 0, 0.1); opacity: 0.7;},  的子节点背景色应为透明色</strong></p>
+<hr>
+<h5 id="3、image标签"><a href="#3、image标签" class="headerlink" title="3、image标签"></a>3、image标签</h5><p>​    顾名思义，放图片的</p>
+<table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>类型</th>
+<th>默认值</th>
+<th>说明</th>
+<th>最低版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>src</td>
+<td>String</td>
+<td></td>
+<td>图片资源地址</td>
+<td></td>
+</tr>
+<tr>
+<td>mode</td>
+<td>String</td>
+<td>‘scaleToFill’</td>
+<td>图片裁剪、缩放的模式</td>
+<td></td>
+</tr>
+<tr>
+<td>lazy-load</td>
+<td>Boolean</td>
+<td>false</td>
+<td>图片懒加载。只针对page与scroll-view下的image有效</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">1.5.0</a></td>
+</tr>
+<tr>
+<td>binderror</td>
+<td>HandleEvent</td>
+<td></td>
+<td>当错误发生时，发布到 AppService 的事件名，事件对象event.detail = {errMsg: ‘something wrong’}</td>
+<td></td>
+</tr>
+<tr>
+<td>bindload</td>
+<td>HandleEvent</td>
+<td></td>
+<td>当图片载入完毕时，发布到 AppService 的事件名，事件对象event.detail = {height:’图片高度px’, width:’图片宽度px’}</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注1：image组件默认宽度300px、高度225px</strong> </p>
+<p><strong>注2：image组件中二维码/小程序码图片不支持长按识别。仅在wx.previewImage中支持长按识别。</strong></p>
+<hr>
+<h5 id="4、text标签"><a href="#4、text标签" class="headerlink" title="4、text标签"></a>4、text标签</h5><p>​    一个行内元素标签。看名字就知道，放文本的。</p>
+<table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>类型</th>
+<th>默认值</th>
+<th>说明</th>
+<th>最低版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>selectable</td>
+<td>Boolean</td>
+<td>false</td>
+<td>文本是否可选</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">1.1.0</a></td>
+</tr>
+<tr>
+<td>space</td>
+<td>String</td>
+<td>false</td>
+<td>显示连续空格</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">1.4.0</a></td>
+</tr>
+<tr>
+<td>decode</td>
+<td>Boolean</td>
+<td>false</td>
+<td>是否解码</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">1.4.0</a></td>
+</tr>
+</tbody>
+</table>
+<p><strong>space 有效值：</strong></p>
+<table>
+<thead>
+<tr>
+<th>值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ensp</td>
+<td>中文字符空格一半大小</td>
+</tr>
+<tr>
+<td>emsp</td>
+<td>中文字符空格大小</td>
+</tr>
+<tr>
+<td>nbsp</td>
+<td>根据字体设置的空格大小</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h5 id="5、scroll-view标签"><a href="#5、scroll-view标签" class="headerlink" title="5、scroll-view标签"></a>5、scroll-view标签</h5><p>​    小程序中，不再可以用js来控制DOM元素。所以小程序，人性化的，为我们封装了很多功能齐全的标签，及属性，之后再说。所以这个scroll-view标签，表示这是一个可以滚动的模块儿。</p>
+<p>​    固定定位的scroll-view。必须设置 scroll-y=”true”,属性，才能动</p>
+<p>​    可以设置宽高，设置宽高的 滚动盒子，需要设置 scroll-y=”true”,属性。就是尽量把参数属性神马的 设置的全一点儿，省的出bug</p>
+<table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>类型</th>
+<th>默认值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scroll-x</td>
+<td>Boolean</td>
+<td>false</td>
+<td>允许横向滚动</td>
+</tr>
+<tr>
+<td>scroll-y</td>
+<td>Boolean</td>
+<td>false</td>
+<td>允许纵向滚动</td>
+</tr>
+<tr>
+<td>upper-threshold</td>
+<td>Number</td>
+<td>50</td>
+<td>距顶部/左边多远时（单位px），触发 scrolltoupper 事件</td>
+</tr>
+<tr>
+<td>lower-threshold</td>
+<td>Number</td>
+<td>50</td>
+<td>距底部/右边多远时（单位px），触发 scrolltolower 事件</td>
+</tr>
+<tr>
+<td>scroll-top</td>
+<td>Number</td>
+<td></td>
+<td>设置竖向滚动条位置</td>
+</tr>
+<tr>
+<td>scroll-left</td>
+<td>Number</td>
+<td></td>
+<td>设置横向滚动条位置</td>
+</tr>
+<tr>
+<td>scroll-into-view</td>
+<td>String</td>
+<td></td>
+<td>值应为某子元素id（id不能以数字开头）。设置哪个方向可滚动，则在哪个方向滚动到该元素</td>
+</tr>
+<tr>
+<td>scroll-with-animation</td>
+<td>Boolean</td>
+<td>false</td>
+<td>在设置滚动条位置时使用动画过渡</td>
+</tr>
+<tr>
+<td>enable-back-to-top</td>
+<td>Boolean</td>
+<td>false</td>
+<td>iOS点击顶部状态栏、安卓双击标题栏时，滚动条返回顶部，只支持竖向</td>
+</tr>
+<tr>
+<td>bindscrolltoupper</td>
+<td>EventHandle</td>
+<td></td>
+<td>滚动到顶部/左边，会触发 scrolltoupper 事件</td>
+</tr>
+<tr>
+<td>bindscrolltolower</td>
+<td>EventHandle</td>
+<td></td>
+<td>滚动到底部/右边，会触发 scrolltolower 事件</td>
+</tr>
+<tr>
+<td>bindscroll</td>
+<td>EventHandle</td>
+<td></td>
+<td>滚动时触发，event.detail = {scrollLeft, scrollTop, scrollHeight, scrollWidth, deltaX, deltaY}</td>
+</tr>
+</tbody>
+</table>
+<p><strong>注:使用竖向滚动时，需要给``一个固定高度，通过 WXSS 设置 height。</strong></p>
+<hr>
+<h5 id="6、swiper标签"><a href="#6、swiper标签" class="headerlink" title="6、swiper标签"></a>6、swiper标签</h5><p>​    这个标签有意思了。滑块儿标签。 最常用的就是轮播图中，滑动切换图片儿。滑块</p>
+<table>
+<thead>
+<tr>
+<th>属性名</th>
+<th>类型</th>
+<th>默认值</th>
+<th>说明</th>
+<th>最低版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>indicator-dots</td>
+<td>Boolean</td>
+<td>false</td>
+<td>是否显示面板指示点</td>
+<td></td>
+</tr>
+<tr>
+<td>indicator-color</td>
+<td>Color</td>
+<td>rgba(0, 0, 0, .3)</td>
+<td>指示点颜色</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">1.1.0</a></td>
+</tr>
+<tr>
+<td>indicator-active-color</td>
+<td>Color</td>
+<td>#000000</td>
+<td>当前选中的指示点颜色</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">1.1.0</a></td>
+</tr>
+<tr>
+<td>autoplay</td>
+<td>Boolean</td>
+<td>false</td>
+<td>是否自动切换</td>
+<td></td>
+</tr>
+<tr>
+<td>current</td>
+<td>Number</td>
+<td>0</td>
+<td>当前所在滑块的 index</td>
+<td></td>
+</tr>
+<tr>
+<td>current-item-id</td>
+<td>String</td>
+<td>“”</td>
+<td>当前所在滑块的 item-id ，不能与 current 被同时指定</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">1.9.0</a></td>
+</tr>
+<tr>
+<td>interval</td>
+<td>Number</td>
+<td>5000</td>
+<td>自动切换时间间隔</td>
+<td></td>
+</tr>
+<tr>
+<td>duration</td>
+<td>Number</td>
+<td>500</td>
+<td>滑动动画时长</td>
+<td></td>
+</tr>
+<tr>
+<td>circular</td>
+<td>Boolean</td>
+<td>false</td>
+<td>是否采用衔接滑动</td>
+<td></td>
+</tr>
+<tr>
+<td>vertical</td>
+<td>Boolean</td>
+<td>false</td>
+<td>滑动方向是否为纵向</td>
+<td></td>
+</tr>
+<tr>
+<td>previous-margin</td>
+<td>String</td>
+<td>“0px”</td>
+<td>前边距，可用于露出前一项的一小部分，接受 px 和 rpx 值</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">1.9.0</a></td>
+</tr>
+<tr>
+<td>next-margin</td>
+<td>String</td>
+<td>“0px”</td>
+<td>后边距，可用于露出后一项的一小部分，接受 px 和 rpx 值</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">1.9.0</a></td>
+</tr>
+<tr>
+<td>display-multiple-items</td>
+<td>Number</td>
+<td>1</td>
+<td>同时显示的滑块数量</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">1.9.0</a></td>
+</tr>
+<tr>
+<td>skip-hidden-item-layout</td>
+<td>Boolean</td>
+<td>false</td>
+<td>是否跳过未显示的滑块布局，设为 true 可优化复杂情况下的滑动性能，但会丢失隐藏状态滑块的布局信息</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">1.9.0</a></td>
+</tr>
+<tr>
+<td>bindchange</td>
+<td>EventHandle</td>
+<td></td>
+<td>current 改变时会触发 change 事件，event.detail = {current: current, source: source}</td>
+<td></td>
+</tr>
+<tr>
+<td>bindanimationfinish</td>
+<td>EventHandle</td>
+<td></td>
+<td>动画结束时会触发 animationfinish 事件，event.detail 同上</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">1.9.0</a></td>
+</tr>
+</tbody>
+</table>
+<p>从 <a href="https://developers.weixin.qq.com/miniprogram/dev/framework/compatibility.html" target="_blank" rel="external">1.4.0</a> 开始，<code>change</code>事件返回<code>detail</code>中包含一个<code>source</code>字段，表示导致变更的原因，可能值如下：</p>
+<ul>
+<li><code>autoplay</code> 自动播放导致swiper变化；</li>
+<li><code>touch</code> 用户划动引起swiper变化；</li>
+<li>其他原因将用空字符串表示。</li>
+</ul>
+<p><strong>注意：其中只可放置``组件，否则会导致未定义的行为。</strong></p>
+<h6 id="swiper-item"><a href="#swiper-item" class="headerlink" title="swiper-item"></a>swiper-item</h6><p>仅可放置在``组件中，宽高自动设置为100%。</p>
+<hr>
+<h5 id="7、rich-text标签"><a href="#7、rich-text标签" class="headerlink" title="7、rich-text标签"></a>7、rich-text标签</h5><p>​    这个标签更牛掰。可以将html的标签字符串转译成小程序用的标签，由于小程序中的标签不同于html所有，往往我们在接受后台数据的时候 很有可能接收到的就是这样的一堆字符串</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;img alt=&quot;undefined&quot; src=&quot;https://cbu01.alicdn.com/img/ibank/2018/291/694/8596496192_1729166718.jpg&quot; /&gt;&lt;br /&gt; ↵&lt;img alt=&quot;undefined&quot; src=&quot;https://cbu01.alicdn.com/img/ibank/2018/973/405/8562504379_1729166718.jpg&quot; /&gt;&lt;br /&gt;</div><div class="line">...</div></pre></td></tr></table></figure>
+<p>那这个时候肿么办捏？有好多人想了好多方法  又正则啊，将img替换成image 啊  等等等，（这个好多人其实就是我自己），想了一大堆的方法，最终屁事儿没有。结果一查文档。发现了这个非常牛掰的标签。</p>
+<p>​    使用方法极其简单。你只需要在data:{}中做好数据就可以了，将后台穿回来的字符串，传值到data中。比如说传到data中的 str上</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">data:&#123;</div><div class="line">  str:&apos;&apos;</div><div class="line">&#125;</div><div class="line">...</div><div class="line">	that.setData(&#123;str:res.data.str&#125;);</div></pre></td></tr></table></figure>
+<p>然后嘞？就更简单了 你只需要在wxml中你需要插入数据的位置定义一个rich-text 标签。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">&lt;view&gt;</div><div class="line">	&lt;rich-text nodes=&quot;&#123;&#123;str&#125;&#125;&quot;&gt;&lt;/rich-text&gt;</div><div class="line">&lt;view&gt;</div></pre></td></tr></table></figure>
+<p>完活儿，就这么简单。</p>
+<p>​    其中nodes的属性推荐使用 Array 类型，由于组件会将 String 类型转换为 Array 类型，因而性能会有所下降</p>
+<p>具体的意思呢，说不太明白，反正就是将你传进来的html标签的字符串，自动转译成一个数组，然后给你遍历，编译成你想要的wxml标签，放入到你需要的位置。是不是很牛掰？更牛掰的是。这个标签可以支持很多很多的html标签，比如，常用的div，img，a，table，tbody，thead，tr，th，td，tfoot，ul，li，span，等等等等，功能特别强大。所以后台再也不用担心小程序不能使用html代码啦。</p>
+<hr>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>1、that.setData().适用于页面需要绑定数据的时候  更改data中数据的方法。如果data中的数据不用作展示用的话，可以不用setData   直接 that.data.XXX = XXXX;   就可以了</p>
+</div></header></article><div class="comments" id="lv-container" data-id="city" data-uid="your uid"><script>(function(d, s) {var j, e = d.getElementsByTagName(s)[0];if (typeof LivereTower === 'function') { return; } j = d.createElement(s);j.src = 'https://cdn-city.livere.com/js/embed.dist.js';j.async = true;e.parentNode.insertBefore(j, e);})(document, 'script');</script></div></main><footer class="foot"><div class="foot-copy">&copy; 2016-2018 SunBoBo</div></footer><script src="/js/scroller.js"></script><script src="/js/main.js"></script></body></html>
