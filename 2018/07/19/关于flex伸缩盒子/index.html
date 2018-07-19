@@ -1,0 +1,25 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="SunBoBo"><link rel="alternative" href="/atom.xml" title="SunBoBo" type="application/atom+xml"><link rel="icon" href="/favicon.png"><title>关于css设置元素宽高相等，伸缩盒子的问题 - SunBoBo</title><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css"><!--[if lt IE 9]><script>(function(a,b){a="abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video".split(" ");for(b=a.length-1;b>=0;b--)document.createElement(a[b])})()</script><![endif]--><script src="/js/jquery-3.1.1.min.js"></script><script src="/js/fancybox/jquery.fancybox.min.js"></script></head><body style="opacity:0;"><header class="head"><h1 class="head-title u-fl"><a href="/">SunBoBo</a></h1><nav class="head-nav u-fr"><ul class="head-nav__list"><li class="head-nav__item"><a class="head-nav__link" href="/archives">Catalog（目录）</a></li></ul></nav></header><main class="main"><article class="post"><header class="post__head"> <time class="post__time" datetime="2018-07-18T16:00:00.000Z">July 19, 2018</time><h1 class="post__title"><a href="/2018/07/19/关于flex伸缩盒子/">关于css设置元素宽高相等，伸缩盒子的问题</a></h1><div class="post__main echo"><h2 id="纯css设置盒子宽高相等"><a href="#纯css设置盒子宽高相等" class="headerlink" title="纯css设置盒子宽高相等"></a>纯css设置盒子宽高相等</h2><pre><code>在一个div中  有四个span，现在呢，想让这四个span的宽自适应。高度等于宽度。以前做的时候都是各种js获取，然后操作DOM元素。可是在某些特定的情况下不能用js操作DOM。别如说微信小程序。这个时候该肿么办捏？下面就是一个非常非常人性化，并且非常牛掰的一个方法，很好的利用了伪元素这一个牛叉的存在
+</code></pre><p>​    首先咱们现在做盒子的宽度自适应。假设这个外层的div的宽度是400px。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">div&#123;</div><div class="line">  width:400px;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>​    以前的时候 我们要让里面的span的宽度自适应的话，是不是需要设置宽度百分比。比如 25%啊  神马的。可是呢？？一旦我设置了间距。margin。span就乱了套了。然后你还一点一点的算比例。好麻烦的话说。现在用这个方法，完美的结局了这个难题。首先我们给这个父盒子升级一下，升级成一个伸缩盒子。怎么升级呢？？非常简单。只需要一个display:flex,和一个,flex-direction 属性。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">div&#123;</div><div class="line">  display: -webkit-flex;</div><div class="line">  flex-direction: row; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>​    然后嘞？？当然还没有完啊。你父盒子伸缩了，里面的盒子也需要知道。我到底占据了父盒子的多少吧？？这时候就需要给子盒子，也就是四个span设置一个flex 属性，注意，这个flex是个属性了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">div&gt;span&#123;</div><div class="line">  flex:1</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>​    这里呢，我设置了，flex:1。什么意思呢？？意思就是说啊，我这个子盒子，占据了父盒子当中1部分。也就是父盒子中所有子盒子中的1个的位置。以此类推。2.就是 2个位置。</p>
+<p>​    这里要说一下 ，这个flex-direction 属性中的值了。有个值。分别介绍一下</p>
+<p><strong>1、row</strong></p>
+<p>​        表示横向，意思是这个父盒子中的所有子盒子的排列方向是由左到右的横向排列的。</p>
+<p><strong>2、row-reverse</strong></p>
+<p>​        加上一个reverse ，意思没有变，还是横向的，只不过呢？？父盒子中的子盒子是按照从右向左的方式排列的。</p>
+<p><strong>3、column</strong></p>
+<p>​        有横向，必然有纵向啊。这个column的意思就是纵向，从上到下。</p>
+<p><strong>4、column-reverse</strong></p>
+<p>​        横向有反的，纵向也有啊。加上个reverse就可以了。就变成从下到上排列了。</p>
+<p>​    这就是flex-deriction的四个值了，介绍完了，我们回到最开始的话题。现在呢，span的宽度定下来了。下面就是高度了。肿么办捏？，思来想去啊。终于想到了一个方法，就是利用，失传已久，被冷落了很久的伪元素。::before。我们来看一下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">span::before&#123;</div><div class="line">	flex:1;</div><div class="line">  	content: &quot;&quot;;</div><div class="line">  	padding-top: 100%;</div><div class="line">  	display: block;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>​    这几个属性缺一不可。我们逐一解释一下，为什么设置这些属性。</p>
+<p>​    首先这个content :  “ “;他的作用呢，就是让这个伪元素的内容为空。告诉浏览器，我的这个伪元素是没有内容的。</p>
+<p>​    然后是padding-top:100%; 就是相当于啊  将这个伪元素的高度撑起来。</p>
+<p>​    然后嘞。就是让他变成一个块元素。</p>
+<p>​    完活了，可以试一下。你就会发现  无论你怎么设置margin 。都无所谓为。父盒子中的子盒子都会跟着自适应的。是一个非常牛掰的一个方法。</p>
+</div></header></article><div class="comments" id="lv-container" data-id="city" data-uid="your uid"><script>(function(d, s) {var j, e = d.getElementsByTagName(s)[0];if (typeof LivereTower === 'function') { return; } j = d.createElement(s);j.src = 'https://cdn-city.livere.com/js/embed.dist.js';j.async = true;e.parentNode.insertBefore(j, e);})(document, 'script');</script></div></main><footer class="foot"><div class="foot-copy">&copy; 2016-2018 SunBoBo</div></footer><script src="/js/scroller.js"></script><script src="/js/main.js"></script></body></html>
