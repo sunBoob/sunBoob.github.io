@@ -22,4 +22,9 @@
 <p>​    然后是padding-top:100%; 就是相当于啊  将这个伪元素的高度撑起来。</p>
 <p>​    然后嘞。就是让他变成一个块元素。</p>
 <p>​    完活了，可以试一下。你就会发现  无论你怎么设置margin 。都无所谓为。父盒子中的子盒子都会跟着自适应的。是一个非常牛掰的一个方法。</p>
+<hr>
+<p>​    但是你以为就真的就完事儿了么？？并没有  ，这里的有一个坑，踩到了会让你蛋疼不已。就是什么呢？？如果这个span中有内容的话  你就会发现，唉？？内容被挤到外边去了。仔细观察一下  ，你就会发现，挤出去的距离正好是这个span 的高度，这是为什么呢？？</p>
+<p>​    因为你用的是::before啊，相当于在这个span的上面设了一道墙。这个墙本来是用来撑起span的高度的。这个时候你再往里放内容，就相当于被墙给挤到外边去了。所以如果有内容的话   建议用::after。::after是在元素的后边设置一道墙。也能起到撑起这个盒子的作用。但是不会把盒子内的东西挤出去。所以这里要注意一下就是。伪元素也有自身的特性的。不要忽视了哦。</p>
+<hr>
+<p>​    这样就结束了么？？没有！！还有一个坑，就是  你比如说 这个div的宽度是100%，然后div内部的span只有一个 ，这个时候呢？？span占据了 1个位置。碰巧div的内部元素只有1.所以 span的宽高啊 ，唰的一下，就变得老大。那怎办，我不想让他那么大啊。所以 这个时候 要搭配着   max-width来使用，给span设定一个最大限定的宽度。他就飞不出你的手掌心了。</p>
 </div></header></article><div class="comments" id="lv-container" data-id="city" data-uid="your uid"><script>(function(d, s) {var j, e = d.getElementsByTagName(s)[0];if (typeof LivereTower === 'function') { return; } j = d.createElement(s);j.src = 'https://cdn-city.livere.com/js/embed.dist.js';j.async = true;e.parentNode.insertBefore(j, e);})(document, 'script');</script></div></main><footer class="foot"><div class="foot-copy">&copy; 2016-2018 SunBoBo</div></footer><script src="/js/scroller.js"></script><script src="/js/main.js"></script></body></html>
