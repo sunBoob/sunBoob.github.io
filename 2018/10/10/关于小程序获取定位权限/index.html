@@ -1,0 +1,337 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="author" content="SunBoBo"><link rel="alternative" href="/atom.xml" title="SunBoBo" type="application/atom+xml"><link rel="icon" href="/favicon.png"><title>关于小程序获取用户权限，以及定位的问题 - SunBoBo</title><link rel="stylesheet" href="/css/main.css"><link rel="stylesheet" href="/js/fancybox/jquery.fancybox.min.css"><!--[if lt IE 9]><script>(function(a,b){a="abbr article aside audio bdi canvas data datalist details dialog figcaption figure footer header hgroup main mark meter nav output progress section summary template time video".split(" ");for(b=a.length-1;b>=0;b--)document.createElement(a[b])})()</script><![endif]--><script src="/js/jquery-3.1.1.min.js"></script><script src="/js/fancybox/jquery.fancybox.min.js"></script></head><body style="opacity:0;"><header class="head"><h1 class="head-title u-fl"><a href="/">SunBoBo</a></h1><nav class="head-nav u-fr"><ul class="head-nav__list"><li class="head-nav__item"><a class="head-nav__link" href="/archives">Catalog（目录）</a></li></ul></nav></header><main class="main"><article class="post"><header class="post__head"> <time class="post__time" datetime="2018-10-09T16:00:00.000Z">October 10, 2018</time><h1 class="post__title"><a href="/2018/10/10/关于小程序获取定位权限/">关于小程序获取用户权限，以及定位的问题</a></h1><div class="post__main echo"><h1 id="关于小程序获取用户权限，以及定位的问题"><a href="#关于小程序获取用户权限，以及定位的问题" class="headerlink" title="关于小程序获取用户权限，以及定位的问题"></a>关于小程序获取用户权限，以及定位的问题</h1><p>​    今天弄了一个收获地址定位的功能，总结一些关于小程序获取权限的坑，表示很惆怅。</p>
+<h3 id="一、获取权限"><a href="#一、获取权限" class="headerlink" title="一、获取权限"></a>一、获取权限</h3><p>​    小程序中获取权限的方式有三种 wx.getSetting、wx.openSetting、wx.authorize。我们一个个的看。</p>
+<p>​    首先是wx.getSetting。获取用户授权设置。这个通常只是用来做判断的，判断用户的授权状态，所以没有什么特别的。</p>
+<p>​    然后是wx.openSetting。打开设置界面。看到这个open，很明显是打开什么，没错，这个openSetting就是打开设置界面，引导用户自己开启某个权限。</p>
+<p>​    最后是wx.authorize。提前发起授权请求。这个就比较牛了。会自动吊起授权请求，开发者在调用需要授权 API 之前，提前向用户发起授权请求。让用户做授权设置。但是有一个缺点，就是如果用户不允许授权的时候，这个方法就废了。</p>
+<p>​    打个比方，如果当开发者需要获取地址定位权限的时候，一般都会先用 wx.authorize，因为不需要用户复杂的操作，直接弹框询问是否授权定位权限。然后这个时候呢用户选择取消，不授权，那么当下一次用户又想用定位的时候，wx.authorize 就不会再次弹出询问窗口了，直接判断为授权失败，所以就无法再进行获取授权了，所以这个时候就需要用其他方式引导用户开启授权。所以就需要用wx.openSetting了。也就是说想要将获取权限的功能弄的完美一点儿的话就需要两个方法搭配着使用，下面我们来看具体代码。</p>
+<h4 id="获取授权的参数及回调"><a href="#获取授权的参数及回调" class="headerlink" title="获取授权的参数及回调"></a>获取授权的参数及回调</h4><p>​    首先，我们先来看一下获取授权的参数以及回调。</p>
+<h3 id="scope-列表"><a href="#scope-列表" class="headerlink" title="scope 列表"></a>scope 列表</h3><table>
+<thead>
+<tr>
+<th>scope</th>
+<th>对应接口</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>scope.userInfo</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/api/open-api/user-info/wx.getUserInfo.html" target="_blank" rel="external">wx.getUserInfo</a></td>
+<td>用户信息</td>
+</tr>
+<tr>
+<td>scope.userLocation</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/api/location/wx.getLocation.html" target="_blank" rel="external">wx.getLocation</a>, <a href="https://developers.weixin.qq.com/miniprogram/dev/api/location/wx.chooseLocation.html" target="_blank" rel="external">wx.chooseLocation</a>, <a href="https://developers.weixin.qq.com/miniprogram/dev/api/location/wx.openLocation.html" target="_blank" rel="external">wx.openLocation</a></td>
+<td>地理位置</td>
+</tr>
+<tr>
+<td>scope.address</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/api/open-api/address/wx.chooseAddress.html" target="_blank" rel="external">wx.chooseAddress</a></td>
+<td>通讯地址</td>
+</tr>
+<tr>
+<td>scope.invoiceTitle</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/api/open-api/invoice/wx.chooseInvoiceTitle.html" target="_blank" rel="external">wx.chooseInvoiceTitle</a></td>
+<td>发票抬头</td>
+</tr>
+<tr>
+<td>scope.werun</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/api/open-api/werun/wx.getWeRunData.html" target="_blank" rel="external">wx.getWeRunData</a></td>
+<td>微信运动步数</td>
+</tr>
+<tr>
+<td>scope.record</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/api/media/recorder/wx.startRecord.html" target="_blank" rel="external">wx.startRecord</a></td>
+<td>录音功能</td>
+</tr>
+<tr>
+<td>scope.writePhotosAlbum</td>
+<td><a href="https://developers.weixin.qq.com/miniprogram/dev/api/media/image/wx.saveImageToPhotosAlbum.html" target="_blank" rel="external">wx.saveImageToPhotosAlbum</a>, <a href="https://developers.weixin.qq.com/miniprogram/dev/api/media/video/wx.saveVideoToPhotosAlbum.html" target="_blank" rel="external">wx.saveVideoToPhotosAlbum</a></td>
+<td>保存到相册</td>
+</tr>
+<tr>
+<td>scope.camera</td>
+<td><camera> 组件</camera></td>
+<td>摄像头</td>
+</tr>
+</tbody>
+</table>
+<p>根据自己需要获取的权限，传入不同的参数</p>
+<hr>
+<p>下面是具体的片段，咱们就以获取定位权限，获取地理位置为例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line"> // 获取定位信息</div><div class="line"> getLocation: function() &#123;</div><div class="line">   var that = this;</div><div class="line">//首先我们用authorize吊起第一次询问授权窗口</div><div class="line">   wx.authorize(&#123;</div><div class="line">   //传入获取用户位置权限的参数scope.userLocation</div><div class="line">     scope: &apos;scope.userLocation&apos;,</div><div class="line">     //成功后回调</div><div class="line">     success: function(res) &#123;</div><div class="line">       console.log(res);//先看下输出的结果</div><div class="line">       //这里我没有做判断，通常情况下，成功回调就表示获取授权成功了，所以我没有做判断</div><div class="line">       //当然也可以根据自己的实际情况做个判断的</div><div class="line">       //然后如果获取授权成功了，我们就开始获取位置，获取位置的方法也有三种稍后下面会介绍</div><div class="line">       wx.chooseLocation(&#123;</div><div class="line">         success: function(res) &#123;</div><div class="line">           console.log(res);//输出一下结果看一下，里面有很多关于位置的信息</div><div class="line">           //这里我只需要展示一个位置的名称就可以了所以将拿到的位置名称，赋值出去，展示就行了</div><div class="line">           that.setData(&#123;</div><div class="line"> 				location:res.name</div><div class="line">		&#125;)</div><div class="line">           </div><div class="line">         &#125;,</div><div class="line">       &#125;)</div><div class="line">     &#125;,</div><div class="line">     //这里是失败回调，也就是用户取消后，拒绝授权时的回调</div><div class="line">     fail: function(res) &#123;</div><div class="line">       console.log(res);</div><div class="line">       //既然用户都选择了不授权，那咱们也要很正式的告诉用户，你不授权，就不能用这个功能</div><div class="line">       //所以果断弹框给他，强势一点儿</div><div class="line">       wx.showModal(&#123;</div><div class="line">         title: &apos;提示&apos;,</div><div class="line">         content: &apos;需要获取您的位置权限才能定位&apos;,</div><div class="line">         confirmText: &apos;前往授权&apos;,//这里改变了原来的确定按钮，变成前往授权的字样</div><div class="line">         success: function(res) &#123;</div><div class="line">         //判断一下，用户选择了确定 还是 再次选择了取消</div><div class="line">           if (res.confirm) &#123;</div><div class="line">           //如果用户确定了，咱们就利用openSetting引导用户去设置授权，吊起设置授权的界面</div><div class="line">             wx.openSetting(&#123;</div><div class="line">               success: function(res) &#123;</div><div class="line">               //然后这里呢，就需要判断一下了，因为openSetting没有像authorize那样，取消授权</div><div class="line">               //就会有失败回调，所以要判断一下用户是否授权了。</div><div class="line">                 if (res.authSetting[&quot;scope.userLocation&quot;] === true) &#123;</div><div class="line">                 //如果授权了，再获取位置信息和上面一样</div><div class="line">                   wx.chooseLocation(&#123;</div><div class="line">                     success: function(res) &#123;</div><div class="line">                       console.log(res);</div><div class="line">                       that.setData(&#123;</div><div class="line"> 							location:res.name</div><div class="line">					&#125;)</div><div class="line">                     &#125;,</div><div class="line">                   &#125;)</div><div class="line">                 &#125; else &#123;</div><div class="line">                 //如果还是没授权，果断再弹框给他，告诉他授权失败，</div><div class="line">                   wx.showToast(&#123;</div><div class="line">                     title: &apos;授权失败&apos;,</div><div class="line">                     icon: &apos;none&apos;,</div><div class="line">                     duration: 1000</div><div class="line">                   &#125;)</div><div class="line"></div><div class="line">                 &#125;</div><div class="line">               &#125;</div><div class="line">             &#125;)</div><div class="line">           &#125; else &#123;</div><div class="line">             wx.showToast(&#123;</div><div class="line">               title: &quot;授权失败&quot;,</div><div class="line">               icon: &quot;none&quot;,</div><div class="line">             &#125;)</div><div class="line"></div><div class="line">           &#125;</div><div class="line">         &#125;,</div><div class="line">       &#125;);</div><div class="line">     &#125;</div><div class="line">   &#125;)</div><div class="line"> &#125;,</div></pre></td></tr></table></figure>
+<hr>
+<p>下面我们介绍一下三种与用户位置相关的api</p>
+<h4 id="wx-getLocation"><a href="#wx-getLocation" class="headerlink" title="wx.getLocation"></a>wx.getLocation</h4><p>​    获取当前的地理位置、速度。当用户离开小程序后，此接口无法调用。</p>
+<h4 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h4><h5 id="Object-object"><a href="#Object-object" class="headerlink" title="Object object"></a>Object object</h5><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>默认值</th>
+<th>是否必填</th>
+<th>说明</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>type</td>
+<td>string</td>
+<td>wgs84</td>
+<td>否</td>
+<td>wgs84 返回 gps 坐标，gcj02 返回可用于 wx.openLocation 的坐标</td>
+<td></td>
+</tr>
+<tr>
+<td>altitude</td>
+<td>string</td>
+<td>false</td>
+<td>否</td>
+<td>传入 true 会返回高度信息，由于获取高度需要较高精确度，会减慢接口返回速度</td>
+<td>&gt;= 1.6.0</td>
+</tr>
+<tr>
+<td>success</td>
+<td>function</td>
+<td></td>
+<td>否</td>
+<td>接口调用成功的回调函数</td>
+<td></td>
+</tr>
+<tr>
+<td>fail</td>
+<td>function</td>
+<td></td>
+<td>否</td>
+<td>接口调用失败的回调函数</td>
+<td></td>
+</tr>
+<tr>
+<td>complete</td>
+<td>function</td>
+<td></td>
+<td>否</td>
+<td>接口调用结束的回调函数（调用成功、失败都会执行）</td>
+</tr>
+</tbody>
+</table>
+<h6 id="object-success-回调函数"><a href="#object-success-回调函数" class="headerlink" title="object.success 回调函数"></a>object.success 回调函数</h6><p><strong>参数</strong></p>
+<p><strong>Object res</strong></p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>说明</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>latitude</td>
+<td>number</td>
+<td>纬度，范围为 -90~90，负数表示南纬</td>
+<td></td>
+</tr>
+<tr>
+<td>longitude</td>
+<td>number</td>
+<td>经度，范围为 -180~180，负数表示西经</td>
+<td></td>
+</tr>
+<tr>
+<td>speed</td>
+<td>number</td>
+<td>速度，单位 m/s</td>
+<td></td>
+</tr>
+<tr>
+<td>accuracy</td>
+<td>number</td>
+<td>位置的精确度</td>
+<td></td>
+</tr>
+<tr>
+<td>altitude</td>
+<td>number</td>
+<td>高度，单位 m</td>
+<td>&gt;= 1.2.0</td>
+</tr>
+<tr>
+<td>verticalAccuracy</td>
+<td>number</td>
+<td>垂直精度，单位 m（Android 无法获取，返回 0）</td>
+<td>&gt;= 1.2.0</td>
+</tr>
+<tr>
+<td>horizontalAccuracy</td>
+<td>number</td>
+<td>水平精度，单位 m</td>
+<td>&gt;= 1.2.0</td>
+</tr>
+</tbody>
+</table>
+<h4 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h4><ul>
+<li>工具中定位模拟使用IP定位，可能会有一定误差。且工具目前仅支持 gcj02 坐标。</li>
+<li>使用第三方服务进行逆地址解析时，请确认第三方服务默认的坐标系，正确进行坐标转换。</li>
+</ul>
+<hr>
+<h4 id="wx-openLocation"><a href="#wx-openLocation" class="headerlink" title="wx.openLocation"></a>wx.openLocation</h4><p>使用微信内置地图查看位置。</p>
+<h4 id="参数-1"><a href="#参数-1" class="headerlink" title="参数"></a>参数</h4><h5 id="Object-object-1"><a href="#Object-object-1" class="headerlink" title="Object object"></a>Object object</h5><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>默认值</th>
+<th>是否必填</th>
+<th>说明</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>latitude</td>
+<td>number</td>
+<td></td>
+<td>是</td>
+<td>纬度，范围为-90~90，负数表示南纬。使用 gcj02 国测局坐标系</td>
+<td></td>
+</tr>
+<tr>
+<td>longitude</td>
+<td>number</td>
+<td></td>
+<td>是</td>
+<td>经度，范围为-180~180，负数表示西经。使用 gcj02 国测局坐标系</td>
+<td></td>
+</tr>
+<tr>
+<td>scale</td>
+<td>number</td>
+<td>18</td>
+<td>否</td>
+<td>缩放比例，范围5~18</td>
+<td></td>
+</tr>
+<tr>
+<td>name</td>
+<td>string</td>
+<td></td>
+<td>否</td>
+<td>位置名</td>
+<td></td>
+</tr>
+<tr>
+<td>address</td>
+<td>string</td>
+<td></td>
+<td>否</td>
+<td>地址的详细说明</td>
+<td></td>
+</tr>
+<tr>
+<td>success</td>
+<td>function</td>
+<td></td>
+<td>否</td>
+<td>接口调用成功的回调函数</td>
+<td></td>
+</tr>
+<tr>
+<td>fail</td>
+<td>function</td>
+<td></td>
+<td>否</td>
+<td>接口调用失败的回调函数</td>
+<td></td>
+</tr>
+<tr>
+<td>complete</td>
+<td>function</td>
+<td></td>
+<td>否</td>
+<td>接口调用结束的回调函数（调用成功、失败都会执行）</td>
+</tr>
+</tbody>
+</table>
+<h4 id="示例代码"><a href="#示例代码" class="headerlink" title="示例代码"></a>示例代码</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">wx.getLocation(&#123;</div><div class="line">  type: &apos;gcj02&apos;, //返回可以用于wx.openLocation的经纬度</div><div class="line">  success (res) &#123;</div><div class="line">    const latitude = res.latitude</div><div class="line">    const longitude = res.longitude</div><div class="line">    wx.openLocation(&#123;</div><div class="line">      latitude,</div><div class="line">      longitude,</div><div class="line">      scale: 28</div><div class="line">    &#125;)</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<hr>
+<h4 id="wx-chooseLocation"><a href="#wx-chooseLocation" class="headerlink" title="wx.chooseLocation"></a>wx.chooseLocation</h4><p>打开地图选择位置。</p>
+<p>应用这个方法，我们就可以运用小程序内部的地图组件及功能查找位置，搜索地区，和地名很实用</p>
+<h4 id="参数-2"><a href="#参数-2" class="headerlink" title="参数"></a>参数</h4><h5 id="Object-object-2"><a href="#Object-object-2" class="headerlink" title="Object object"></a>Object object</h5><table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>默认值</th>
+<th>是否必填</th>
+<th>说明</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>success</td>
+<td>function</td>
+<td></td>
+<td>否</td>
+<td>接口调用成功的回调函数</td>
+<td></td>
+</tr>
+<tr>
+<td>fail</td>
+<td>function</td>
+<td></td>
+<td>否</td>
+<td>接口调用失败的回调函数</td>
+<td></td>
+</tr>
+<tr>
+<td>complete</td>
+<td>function</td>
+<td></td>
+<td>否</td>
+<td>接口调用结束的回调函数（调用成功、失败都会执行）</td>
+</tr>
+</tbody>
+</table>
+<h6 id="object-success-回调函数-1"><a href="#object-success-回调函数-1" class="headerlink" title="object.success 回调函数"></a>object.success 回调函数</h6><p><strong>参数</strong></p>
+<p><strong>Object res</strong></p>
+<table>
+<thead>
+<tr>
+<th>属性</th>
+<th>类型</th>
+<th>说明</th>
+<th>支持版本</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>位置名称</td>
+<td></td>
+</tr>
+<tr>
+<td>address</td>
+<td>string</td>
+<td>详细地址</td>
+<td></td>
+</tr>
+<tr>
+<td>latitude</td>
+<td>string</td>
+<td>纬度，浮点数，范围为-90~90，负数表示南纬。使用 gcj02 国测局坐标系</td>
+<td></td>
+</tr>
+<tr>
+<td>longitude</td>
+<td>string</td>
+<td>经度，浮点数，范围为-180~180，负数表示西经。使用 gcj02 国测局坐标系</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</div></header></article><div class="comments" id="lv-container" data-id="city" data-uid="your uid"><script>(function(d, s) {var j, e = d.getElementsByTagName(s)[0];if (typeof LivereTower === 'function') { return; } j = d.createElement(s);j.src = 'https://cdn-city.livere.com/js/embed.dist.js';j.async = true;e.parentNode.insertBefore(j, e);})(document, 'script');</script></div></main><footer class="foot"><div class="foot-copy">&copy; 2016-2018 SunBoBo</div></footer><script src="/js/scroller.js"></script><script src="/js/main.js"></script></body></html>
